@@ -1,12 +1,31 @@
 const router = require("express").Router(); 
 const Post = require("../models/Post")
+const Category = require("../models/Category")
 
 // POST NEW BLOG
 router.post("/", async (req, res) => {
   try {
     const newBlog = new Post(req.body);  
     const blog = await newBlog.save(); 
-    res.status(200).json(blog); 
+    // const {categories} = blog;
+    
+    blog.save((err, result) => {
+      let arrayOfCategories = result.categories && result.categories.split(',');
+      if (err) {
+          return res.status(400).json(err);
+      }
+      // res.json(result);
+      Post.findByIdAndUpdate(result._id, { $push: { categories: arrayOfCategories } }, { new: true }).exec(
+          (err, result) => {
+              if (err) {
+                  return res.status(400).json(err);
+              } else {
+                res.json(result);
+              }
+          }
+      );
+  });
+
   } catch (err) {
     res.status(500).json(err);
   }
@@ -40,18 +59,19 @@ router.get("/:id", async (req, res) => {
     res.status(500).json(err)
   }
 })
+
 //get post by category ID
-router.get("/postbycatid/:catid", async (req, res) => {
-  try {
-    const posts = await Post.find()
-    // console.log(posts)
-    const requiredPosts = posts.filter(p => p.category.includes(req.params.catid))
-    console.log(requiredPosts)
-    res.status(200).json(requiredPosts)
-  } catch(err) {
-    res.status(500).json(err)
-  }
-})
+// router.get("/postbycatid/:catid", async (req, res) => {
+//   try {
+//     const posts = await Post.find()
+//     const requiredPosts = posts.filter(p => p.category.includes(req.params.catid))
+//     console.log(requiredPosts)
+//     res.status(200).json(requiredPosts)
+//   } catch(err) {
+//     res.status(500).json(err)
+//   }
+// })
+
 // DELETE BLOG ARTICLE
 router.delete("/:id", async (req, res) => {
   try {
@@ -70,7 +90,7 @@ router.get("/", async (req, res) => {
   try{
     let posts; 
     if(username) {
-      posts = await Post.find({ username })
+      posts = await Post.find({ username }).populate("categories")
     } else if(category) {
       posts = await Post.find({ 
         categories: {

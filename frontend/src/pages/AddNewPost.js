@@ -18,9 +18,9 @@ function AddNewPost() {
 
   const handleCheckbox = (e) => {
     const categories = [];
-    categories.push(e.target.value)
-    setCheckedCategory([...checkedCategory, ...categories]);
-    // console.log(checkedCategory);
+    // categories.push(e.target.value)
+    // setCheckedCategory([...checkedCategory, ...categories]);
+    // // console.log(checkedCategory);
     // console.log(categories);
   }
 
@@ -38,10 +38,8 @@ function AddNewPost() {
       username: user.username,
       title,
       excerpt,
-      desc,
-      checkedCategory
+      desc
     };
-    console.log(newPost)
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;

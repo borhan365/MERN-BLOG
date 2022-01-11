@@ -489,3 +489,16 @@ li {
   background: crimson;
   padding: 5px 10px !important;
 }
+.admin-action-btn {
+  display: flex;
+  justify-content: flex-start;
+  grid-gap: 15px;
+}
+.admin-action-btn svg:first-child {
+  color: red;
+  cursor: pointer;
+}
+.admin-action-btn svg:last-child {
+  color: var(--brandColor);
+  cursor: pointer;
+}

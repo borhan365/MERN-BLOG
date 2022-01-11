@@ -47,12 +47,12 @@ function Header() {
                     <li>
                       <NavLink to='/register' className={(navinfo) => navinfo.isActive ? "activeNav" : ""}>REGISTER</NavLink>
                     </li>
+                    <li>
+                      <NavLink to='/admin/dashboard' className={(navinfo) => navinfo.isActive ? "activeNav" : "Dashboard-button"}>Dashboard</NavLink>
+                    </li>
                   </ul>
                 )
               }
-              
-                  
-              
               </ul>
           </div>
         </div>

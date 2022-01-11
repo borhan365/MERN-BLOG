@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Profile from './pages/Profile';
 import { useContext } from 'react';
 import { Context } from './context/Context';
+import EditPost from './pages/EditPost';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/category/:catid" element={<Category />} />
         <Route path="/addnewpost" element={user ? <AddNewPost /> : <Login />} />
+        <Route path="/edit/:id" element={user ? <EditPost /> : <Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={user ? <Profile /> : <Login />} />
         <Route path="/register" element={<Register />} />

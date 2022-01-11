@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-const {ObjectId} = mongoose.Schema; 
 
 const postSchema = new mongoose.Schema(
   {
@@ -21,13 +20,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    category:  [{
-      type: String
-  }],
+    categories: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Category'
+      },
   }, { timestamps: true }
 )
-// {
-      //   type: ObjectId, 
-      //   ref: "Category" 
-      // }
 module.exports = mongoose.model("Post", postSchema); 
